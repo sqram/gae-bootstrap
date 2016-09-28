@@ -1,7 +1,7 @@
 {
-  "name": "regexbox.com",
+  "name": "gae-bootstrap",
   "version": "1.1.0",
-  "description": "regex repository",
+  "description": "App Engine skelleton",
   "private": true,
   "license": "Apache Version 2.0",
   "author": "Google Inc.",
@@ -12,7 +12,7 @@
     "start": "/usr/bin/dev_appserver.py . --require_indexes=True",
     "watch": "NODE_ENV=dev ; gulp watch",
     "build" : "gulp build --type production",
-    "deploy": "gulp build && gcloud preview app deploy"
+    "deploy": "gcloud config set project {projectname} && gulp build --type production && gcloud app deploy"
   },
   "dependencies": {},
   "devDependencies": {

@@ -4,7 +4,8 @@
 2. https://cloud.google.com/source-repositories/docs/quickstart
 3. open terminal to project directory and run `npm start`
 4. open another terminal to same dir and run `gulp watch`
-5. don't forget to `npm i`
+5. in package.json's deploy command, edit `{projectname}`
+6. don't forget to `npm i`
 
 _note: updating files in template/ will not auto reload,  only files being watched by `gulp watch` will_
 

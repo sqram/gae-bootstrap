@@ -8,7 +8,7 @@
 
 _note: updating files in template/ will not auto reload,  only files being watched by `gulp watch` will_
 
-### __If building SPA  __
+### __If building SPA__
 - delete templates
 - create index.html in src/
 

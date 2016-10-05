@@ -4,7 +4,10 @@
 2. open terminal to project directory and run `npm start`
 3. open another terminal to same dir and run `gulp watch`
 4. in package.json's deploy command, edit `{projectname}`
-5. don't forget to `npm i``
+5. don't forget to `npm i`
+6. go to localhost:8080/ to see your app
+7. go to localhost:8000/ to see ndb interface
+
 
 _note: updating files in template/ will not auto reload,  only files being watched by `gulp watch` will_
 

@@ -9,16 +9,15 @@ var babelconfig = require('./webpack.config')
 
 // html
 gulp.task('html', () => {
-    gulp.src(['./src/*.html'], { base: './src' })
+  gulp.src(['./src/*.html'], { base: './src' })
     .pipe(gulp.dest('./static/'))
     .pipe($.connect.reload())
 });
 
 // stylus
 gulp.task('css', () => {
-    gulp.src(['src/css/**/*.styl'], { base: './src' })
+  gulp.src(['src/css/**/*.styl'], { base: './src' })
     .pipe($.stylus({
-
       'include css': true,
       compress: true
     }))
@@ -28,7 +27,8 @@ gulp.task('css', () => {
 
 // js
 gulp.task('js', () => {
-     gulp.src(['src/js/**/*.js'], { base: 'src' })
+  gulp.src(['src/js/**/*.js'], { base: 'src' })
+    .pipe($.plumber())
     .pipe(webpackstream(babelconfig))
     .pipe(prod ? $.uglify() : $.util.noop())
     .pipe(gulp.dest('./static/js'))
@@ -40,7 +40,7 @@ gulp.task('js', () => {
 // assets
 gulp.task('assets', () => {
   return gulp.src(['src/assets/**/*.*'], { base: 'src' })
-    .pipe($.cache($.imagemin({
+  .pipe($.cache($.imagemin({
       optimizationLevel: 3,
       progressive: true,
       interlaced: true

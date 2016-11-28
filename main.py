@@ -20,8 +20,7 @@ jinja_env = jinja2.Environment(
   autoescape=True)
 
 
-
-# todo findout how to send session id in the `tabbit`
+# Base handler for all our requests
 class BaseHandler(webapp2.RequestHandler):
   def dispatch(self):
     self.session_store = sessions.get_store(request=self.request)
@@ -32,15 +31,27 @@ class BaseHandler(webapp2.RequestHandler):
 
   @webapp2.cached_property
   def session(self):
-    return self.session_store.get_session(name='regexbox', max_age=31104000, backend='datastore')
+    return self.session_store.get_session(name='fcheck', max_age=31104000, backend='datastore')
+
+
+  def render(self, template, templatedata = {}, spfdata = {}, spf=''):
+    template = jinja_env.get_template(template + '.html')
+    
+    if spf:
+      templatedata['full'] = False
+      spfdata['body'] = {'content': template.render(**templatedata) }
+      return jsonify(spfdata)
+    else:
+      return template.render(**templatedata)
+
 
 
 class Home(BaseHandler):
 
   def get(self):
     templatedata, spfdata  =  ({'full' : True}, {})
-    spfdata['title'] = 'Tabbit Pastebin'
-    self.response.write(render('index', templatedata, spfdata, self.request.get('spf')))
+    spfdata['title'] = 'My Site'
+    self.response.write(self.render('index', templatedata, spfdata, self.request.get('spf')))
 
 
 
@@ -59,7 +70,7 @@ routes = [
 
 conf = {
    'webapp2_extras.sessions': {
-     'secret_key': 'A0Zr98j/3yX~$HH!jmN]LWX/,?RT',
+     'secret_key': 'super-secret-k3y',
      'cookie_args': {
      'max_age': 31104000
      }
@@ -68,14 +79,3 @@ conf = {
 
 
 app = webapp2.WSGIApplication(routes=routes, config=conf, debug=True)
-
-
-def render(template, templatedata = {}, spfdata = {}, spf=''):
-  template = jinja_env.get_template(template + '.html')
-  if spf:
-    templatedata['full'] = False
-    spfdata['body'] = {'content': template.render(**templatedata) }
-    return jsonify(spfdata)
-  else:
-    return template.render(**templatedata)
-
